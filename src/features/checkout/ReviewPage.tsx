@@ -23,7 +23,7 @@ export function ReviewPage({ items, shipping, payment, onChange, onSuccess, onNa
   const { quantity, subtotal } = getCartTotals(items)
   const total = subtotal + getShippingFee(shipping.delivery)
   const method = paymentMethods.find(option => option.id === payment.method)!
-  const delivery = shipping.delivery === 'standard' ? 'Standard · from Vietnam' : 'Express'
+  const delivery = shipping.delivery === 'standard' ? 'Standard' : 'Express'
   const arrival = shipping.delivery === 'standard' ? 'Arrives 19–22 Nov · Free' : 'Arrives 16–18 Nov · ₱350'
   return <div className="checkout-prototype">
     <CheckoutHeader quantity={quantity} onCart={() => onNavigate('cart')} onUnavailable={label => setNotice(`${label} is not available in this preview.`)} />

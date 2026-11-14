@@ -13,15 +13,15 @@ export type ShippingDetails = {
 }
 
 export const initialShipping: ShippingDetails = {
-  fullName: '',
-  mobile: '',
-  province: '',
-  city: '',
-  region: '',
-  barangay: '',
-  postalCode: '',
-  street: '',
-  landmark: '',
+  fullName: 'Lamdaaa',
+  mobile: '+63 917 555 0142',
+  province: 'Metro Manila',
+  city: 'Makati City',
+  region: 'Metro Manila (NCR)',
+  barangay: 'Poblacion',
+  postalCode: '1210',
+  street: 'Unit 12B, 5432 Kalayaan Ave.',
+  landmark: 'Across the 7-Eleven, blue gate',
   channel: 'SMS',
   delivery: 'standard',
 }

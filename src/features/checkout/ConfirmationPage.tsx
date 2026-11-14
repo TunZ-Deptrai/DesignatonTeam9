@@ -41,7 +41,7 @@ export function ConfirmationPage({ receipt, onContinueShopping }: { receipt: Ord
           <ol className="confirmation-timeline" aria-label="Order progress">
             {['Confirmed', 'Packing', 'Shipped', 'Out for delivery', 'Delivered'].map((label, index) => <li key={label} className={index < 2 ? 'is-complete' : ''} aria-current={index === 1 ? 'step' : undefined}><span>{label}</span><span className="confirmation-progress-bar" /></li>)}
           </ol>
-          {showTracking && <div className="confirmation-tracking-details"><p>{shipping.fullName} · {shipping.mobile}</p><p>{shipping.street}, {shipping.barangay}, {shipping.city}, {shipping.province} {shipping.postalCode}</p><p>{shipping.delivery === 'standard' ? 'Standard · from Vietnam' : 'Express'} · {payment.method === 'cod' ? 'Cash on delivery' : 'Payment complete'}</p></div>}
+          {showTracking && <div className="confirmation-tracking-details"><p>{shipping.fullName} · {shipping.mobile}</p><p>{shipping.street}, {shipping.barangay}, {shipping.city}, {shipping.province} {shipping.postalCode}</p><p>{shipping.delivery === 'standard' ? 'Standard' : 'Express'} · {payment.method === 'cod' ? 'Cash on delivery' : 'Payment complete'}</p></div>}
         </section>
         <section className="confirmation-card confirmation-updates" aria-label="Messenger updates">
           <img src={messenger} width="40" height="40" alt="Messenger" />

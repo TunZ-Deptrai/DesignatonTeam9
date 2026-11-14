@@ -103,10 +103,10 @@ export function ShippingPage({ items, details, onChange, onBack, onContinue }: S
             <fieldset className="shipping-delivery">
               <legend>Delivery</legend>
               {([
-                { id: 'standard', label: 'Standard · from Vietnam', helper: 'Arrives 19–22 Nov · duties included', fee: 'Free' },
+                { id: 'standard', label: 'Standard', helper: 'Arrives 19–22 Nov · duties included', fee: 'Free' },
                 { id: 'express', label: 'Express', helper: 'Arrives 16–18 Nov', fee: formatPrice(getShippingFee('express')) },
               ] as const).map(option => (
-                <label hidden={option.id === 'standard'} key={option.id} className={`shipping-delivery-option ${details.delivery === option.id ? 'is-selected' : ''}`}>
+                <label key={option.id} className={`shipping-delivery-option ${details.delivery === option.id ? 'is-selected' : ''}`}>
                   <input type="radio" name="delivery" value={option.id} checked={details.delivery === option.id} onChange={() => onChange({ ...details, delivery: option.id })} />
                   <span className="shipping-radio-mark" aria-hidden="true">{details.delivery === option.id && <img src={radioDot} width="12" height="12" alt="" />}</span>
                   <span className="shipping-delivery-copy"><span>{option.label}</span><small>{option.helper}</small></span>

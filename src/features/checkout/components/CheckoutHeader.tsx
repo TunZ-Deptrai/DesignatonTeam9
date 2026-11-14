@@ -13,7 +13,7 @@ export function CheckoutHeader({ quantity, onUnavailable, onCart }: { quantity: 
         </nav>
         <div className="checkout-header-actions">
           <Button variant="icon" aria-label="Search" onClick={() => onUnavailable('Search')}><AssetIcon src={assets.search} /></Button>
-          <Button variant="icon" aria-label="Your account" onClick={() => onUnavailable('Your account')}><AssetIcon src={assets.account} /></Button>
+          <Button variant="icon" aria-label="Your account" onClick={() => { window.location.hash = '/account/membership' }}><AssetIcon src={assets.account} /></Button>
           <div className="checkout-cart-icon">
             <Button variant="icon" aria-label={`Your cart, ${quantity} items`} onClick={() => onCart ? onCart() : document.getElementById('cart-title')?.focus()}><AssetIcon src={assets.cart} /></Button>
             <span className="checkout-cart-count" aria-hidden="true">{quantity}</span>

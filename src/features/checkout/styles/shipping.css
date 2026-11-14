@@ -11,6 +11,8 @@
 .step-dot { display: inline-flex; align-items: center; justify-content: center; border-radius: 100px; width: 24px; height: 24px; background: var(--checkout-border); font-size: 12px; line-height: 12px; font-weight: 500; }
 .step-complete .step-dot { color: var(--checkout-on-accent); background: var(--checkout-accent); }
 .shipping-columns { display: grid; grid-template-columns: minmax(0,1fr) 420px; align-items: start; gap: 48px; }
+.shipping-columns--summary-only { grid-template-columns: minmax(0, 1fr); }
+.shipping-columns--summary-only .shipping-side { justify-self: center; width: 100%; max-width: 420px; }
 .shipping-form { display: flex; flex-direction: column; gap: 32px; min-width: 0; }
 .shipping-form :where(h1,h2,legend) { font-family: var(--checkout-font-heading); font-size: 28px; font-weight: 400; line-height: 36px; letter-spacing: 0; color: #58662a; }
 .shipping-contact h1:focus { outline: none; }
@@ -51,8 +53,6 @@
 .shipping-summary-item-copy small { font-size: 12px; line-height: 16px; letter-spacing: -.28px; color: var(--checkout-text-light); }
 .shipping-summary-item > span { white-space: nowrap; font-weight: 500; }
 .shipping-summary .moc-button--primary { width: 100%; }
-.shipping-signin { display: flex; align-items: center; gap: 4px; font-size: 12px; line-height: 16px; letter-spacing: -.28px; color: var(--checkout-text-light); }
-.shipping-signin button { padding: 8px 12px; min-height: 32px; font-size: 14px; line-height: 20px; font-weight: 600; color: var(--checkout-heading-color); }
 .shipping-notice:empty { display: none; }
 .shipping-notice { align-self: stretch; font-size: 14px; line-height: 20px; color: var(--checkout-text-base); }
 .shipping-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
@@ -72,6 +72,5 @@
   .shipping-summary-item { flex-wrap: wrap; }
   .shipping-summary-item-copy { flex: 1 1 120px; }
   .shipping-delivery-option { padding: 16px; }
-  .shipping-signin button { min-height: 44px; }
 }
 @media (prefers-reduced-motion: reduce) { .shipping-field input,.shipping-field select,.shipping-channel,.shipping-delivery-option { transition: none; } }

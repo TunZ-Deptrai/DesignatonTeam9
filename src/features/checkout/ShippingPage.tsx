@@ -1,4 +1,4 @@
-import { useRef, useState, type FormEvent } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type FormEvent } from 'react'
 import { Button } from '../../components/ui/Button'
 import { AssetIcon } from '../../components/ui/AssetIcon'
 import { FormField } from '../../components/ui/FormField'
@@ -19,16 +19,50 @@ import './styles/shipping.css'
 type ShippingPageProps = {
   items: CartProduct[]
   details: ShippingDetails
+  formVisible: boolean
+  onRevealForm: () => void
   onChange: (details: ShippingDetails) => void
   onBack: () => void
   onContinue: () => void
 }
 
-export function ShippingPage({ items, details, onChange, onBack, onContinue }: ShippingPageProps) {
+export function ShippingPage({ items, details, formVisible, onRevealForm, onChange, onBack, onContinue }: ShippingPageProps) {
   const { quantity, subtotal } = getCartTotals(items)
   const shippingFee = getShippingFee(details.delivery)
   const [notice, setNotice] = useState('')
   const noticeRef = useRef<HTMLParagraphElement>(null)
+  const contactTitleRef = useRef<HTMLHeadingElement>(null)
+  const formRef = useRef<HTMLFormElement>(null)
+  const summaryRef = useRef<HTMLDivElement>(null)
+  const summaryBeforeReveal = useRef<DOMRect | null>(null)
+  useLayoutEffect(() => {
+    const previous = summaryBeforeReveal.current
+    const summary = summaryRef.current
+    summaryBeforeReveal.current = null
+    if (!formVisible || !previous || !summary || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const next = summary.getBoundingClientRect()
+    const animation = summary.animate([
+      { transform: `translate(${previous.left - next.left}px, ${previous.top - next.top}px)` },
+      { transform: 'translate(0, 0)' },
+    ], { duration: 480, easing: 'cubic-bezier(.22,.61,.36,1)' })
+    return () => animation.cancel()
+  }, [formVisible])
+  useEffect(() => {
+    if (formVisible) contactTitleRef.current?.focus({ preventScroll: true })
+  }, [formVisible])
+
+  function revealForm() {
+    summaryBeforeReveal.current = summaryRef.current?.getBoundingClientRect() ?? null
+    onRevealForm()
+  }
+
+  function continueCheckout() {
+    if (!formVisible) {
+      revealForm()
+      return
+    }
+    formRef.current?.requestSubmit()
+  }
   const province = addressOptions.find(option => option.province === details.province) ?? addressOptions[0]
   const city = province.cities.find(option => option.name === details.city) ?? province.cities[0]
 
@@ -61,10 +95,10 @@ export function ShippingPage({ items, details, onChange, onBack, onContinue }: S
       <CheckoutHeader quantity={quantity} onUnavailable={unavailable} onCart={onBack} />
       <main className="shipping-main" data-figma-node="503:11581">
         <CheckoutStepper onCart={onBack} />
-        <div className="shipping-columns">
-          <form id="shipping-form" className="shipping-form" onSubmit={submit}>
+        <div className={`shipping-columns${formVisible ? '' : ' shipping-columns--summary-only'}`}>
+          {formVisible && <form ref={formRef} id="shipping-form" className="shipping-form" onSubmit={submit}>
             <section className="shipping-contact" aria-labelledby="shipping-contact-title">
-              <h1 id="shipping-contact-title" tabIndex={-1}>Contact</h1>
+              <h1 ref={contactTitleRef} id="shipping-contact-title" tabIndex={-1}>Contact</h1>
               <div className="shipping-field-row">
                 {field('fullName', 'Full Name', { autoComplete: 'name' })}
                 {field('mobile', 'Mobile number', { autoComplete: 'tel', type: 'tel' })}
@@ -110,8 +144,8 @@ export function ShippingPage({ items, details, onChange, onBack, onContinue }: S
                 </label>
               ))}
             </fieldset>
-          </form>
-          <div className="shipping-side">
+          </form>}
+          <div ref={summaryRef} className="shipping-side">
             <aside className="cart-summary shipping-summary" aria-labelledby="shipping-summary-title" data-figma-node="503:11655">
               <h2 id="shipping-summary-title">Order summary</h2>
               {items.map(item => (
@@ -128,10 +162,9 @@ export function ShippingPage({ items, details, onChange, onBack, onContinue }: S
               </dl>
               <div className="cart-summary-divider" />
               <dl className="cart-summary-total"><div><dt>Total</dt><dd key={subtotal + shippingFee} className="cart-summary-amount" aria-live="polite">{formatPrice(subtotal + shippingFee)}</dd></div></dl>
-              <Button variant="primary" type="submit" form="shipping-form" disabled={!items.length}>Continue</Button>
+              <Button variant="primary" type="button" onClick={continueCheckout} aria-expanded={formVisible} aria-controls={formVisible ? 'shipping-form' : undefined} disabled={!items.length}>Continue</Button>
               <p className="cart-guarantee"><AssetIcon src={assets.check} /><span>Free size exchange within 7 days if it doesn’t fit.</span></p>
             </aside>
-            <p className="shipping-signin">Have an account? <Button onClick={() => unavailable('Sign in')}>Sign in</Button></p>
             <p ref={noticeRef} className="shipping-notice" role="status" tabIndex={-1}>{notice}</p>
           </div>
         </div>

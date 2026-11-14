@@ -1,0 +1,51 @@
+/* Shared, restrained motion for the existing fashion prototype. No layout-sized animation. */
+.checkout-prototype {
+  --studio-ease: cubic-bezier(.22,.61,.36,1);
+  --studio-reveal-duration: 460ms;
+}
+.checkout-prototype main { isolation: isolate; animation: studio-page-in 260ms ease-out backwards; }
+.checkout-prototype :is(.cart-title-row,.checkout-page-head,.checkout-stepper) { animation: studio-reveal 380ms var(--studio-ease) backwards; }
+.checkout-prototype :is(.cart-item,.shipping-form > section,.shipping-form > fieldset,.payment-content > :not(.checkout-page-head),.review-content > :not(.checkout-page-head),.confirmation-content > *,.confirmation-side > *,.membership-content > *) {
+  animation: studio-reveal var(--studio-reveal-duration) var(--studio-ease) backwards;
+  animation-delay: 50ms;
+}
+.checkout-prototype :is(.cart-item,.shipping-form > *,.payment-content > *,.review-content > *,.confirmation-content > *,.confirmation-side > *,.membership-content > *):nth-child(2) { animation-delay: 100ms; }
+.checkout-prototype :is(.shipping-form > *,.payment-content > *,.review-content > *,.confirmation-content > *,.confirmation-side > *,.membership-content > *):nth-child(3) { animation-delay: 150ms; }
+.checkout-prototype :is(.payment-content > *,.review-content > *,.confirmation-content > *,.membership-content > *):nth-child(n+4) { animation-delay: 190ms; }
+.checkout-prototype .shipping-side { animation: studio-page-in 380ms ease-out 80ms backwards; }
+.checkout-prototype .shipping-form { scroll-margin-top: 100px; }
+.checkout-prototype .shipping-form > section:first-child { animation-delay: 100ms; }
+.checkout-prototype .shipping-form > section:nth-child(2) { animation-delay: 170ms; }
+.checkout-prototype .shipping-form > fieldset { animation-delay: 220ms; }
+.checkout-prototype .moc-button { transition: transform 160ms var(--studio-ease), background-color 200ms ease, opacity 200ms ease, box-shadow 220ms ease; }
+.checkout-prototype .moc-button:active:not(:disabled) { transform: scale(.98); }
+.checkout-prototype :is(.shipping-channel,.shipping-delivery-option,.payment-option) { transition: border-color 200ms ease, background-color 200ms ease, box-shadow 220ms ease; }
+.checkout-prototype :is(.shipping-radio-mark,.checkout-checkbox-mark) { transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+.checkout-prototype .shipping-field input { transition: border-color 180ms ease, box-shadow 180ms ease; }
+.checkout-prototype .shipping-field input:focus-visible { box-shadow: 0 0 0 3px rgb(106 120 59 / .09); outline: none; }
+.checkout-prototype .cart-item-image img { transition: transform 650ms var(--studio-ease); }
+.checkout-prototype .cart-summary { transition: box-shadow 260ms ease; }
+.checkout-prototype .membership-nav .moc-button { transition: background-color 200ms ease, color 200ms ease, transform 160ms ease; }
+.checkout-prototype .member-progress-bar > span { animation: studio-progress-in 800ms var(--studio-ease) 160ms backwards; transform-origin: left; }
+.checkout-prototype .confirmation-progress-bar { animation: studio-progress-in 650ms var(--studio-ease) 160ms backwards; transform-origin: left; }
+.checkout-prototype .mock-payment-dialog[open] { animation: studio-dialog-in 320ms var(--studio-ease) backwards; }
+.checkout-prototype .mock-payment-dialog[open]::backdrop { animation: studio-page-in 240ms ease-out backwards; }
+.checkout-prototype .mock-payment-state.is-success { animation: studio-reveal 320ms var(--studio-ease) backwards; }
+@media (hover: hover) and (pointer: fine) {
+  .checkout-prototype .moc-button--primary:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 4px 12px rgb(74 87 38 / .16); }
+  .checkout-prototype .moc-button--primary:active:not(:disabled) { transform: scale(.98); }
+  .checkout-prototype .moc-button--icon:hover { transform: translateY(-1px); }
+  .checkout-prototype .cart-item-image:hover img { transform: scale(1.035); }
+  .checkout-prototype :is(.shipping-delivery-option,.payment-option):hover { box-shadow: 0 3px 12px rgb(74 87 38 / .05); }
+}
+@keyframes studio-page-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes studio-reveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes studio-dialog-in { from { opacity: 0; transform: translateY(12px) scale(.985); } to { opacity: 1; transform: none; } }
+@keyframes studio-progress-in { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (max-width: 599px) {
+  .checkout-prototype { --studio-reveal-duration: 380ms; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .checkout-prototype *, .checkout-prototype *::before, .checkout-prototype *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .checkout-prototype .moc-button:is(:hover,:active),.checkout-prototype .cart-item-image:hover img { transform: none; }
+}

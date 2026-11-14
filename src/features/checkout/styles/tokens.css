@@ -1,0 +1,45 @@
+/* Figma Cart 503:11546. Keep bindings scoped to Checkout. */
+@font-face {
+  font-family: 'Inter';
+  src: url('../../../assets/checkout/fonts/InterVariable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* User-supplied font for local prototype review. Web/distribution rights remain unverified.
+   Preserve Macala-LICENSE.txt; do not publish the font without reviewing those rights. */
+@font-face {
+  font-family: 'MACALA DE CLUB Personal Use';
+  src: url('../../../assets/checkout/fonts/MacalaDeClub-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.checkout-prototype {
+  --checkout-font-ui: 'Inter', sans-serif;
+  --checkout-font-heading: 'MACALA DE CLUB Personal Use';
+  --checkout-background: rgb(99% 97.80513644218445% 95.41541337966919%);
+  --checkout-surface: #fff;
+  --checkout-text: #121212;
+  --checkout-text-base: rgb(0 0 0 / 0.6901960968971252);
+  --checkout-text-light: rgb(0 0 0 / 0.48627451062202454);
+  --checkout-text-remove: rgb(1 1 1 / 0.45);
+  --checkout-accent: #6a783b;
+  --checkout-heading-color: #4a5726;
+  --checkout-price: #b76649;
+  --checkout-border: rgb(2 2 2 / 0.07450980693101883);
+  --checkout-icon-border: rgb(1 1 1 / 0.13);
+  --checkout-fit-background: rgb(1 170 1 / 0.14);
+  --checkout-on-accent: #fdfdfd;
+  --checkout-radius: 4px;
+  --checkout-gap-small: 12px;
+  --checkout-gap-medium: 16px;
+  --checkout-gap-large: 24px;
+  --checkout-gap-section: 32px;
+  --checkout-gap-columns: 48px;
+  --checkout-shadow: 0 1px 1px rgb(0 0 0 / 0.04);
+  --checkout-press-duration: 120ms;
+  --checkout-value-duration: 200ms;
+}

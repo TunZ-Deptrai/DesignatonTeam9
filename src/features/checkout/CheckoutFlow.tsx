@@ -24,7 +24,6 @@ export function CheckoutFlow() {
   const [shipping, setShipping] = useState<ShippingDetails>(initialShipping)
   const [payment, setPayment] = useState<PaymentDetails>(initialPayment)
   const [editingShipping, setEditingShipping] = useState(false)
-  const [shippingFormVisible, setShippingFormVisible] = useState(false)
   const [receipt, setReceipt] = useState<OrderReceipt | null>(null)
   const orderSequence = useRef(20481)
 
@@ -63,20 +62,18 @@ export function CheckoutFlow() {
   }} onNavigate={next => {
     if (next === 'shipping') {
       setEditingShipping(true)
-      setShippingFormVisible(true)
     }
     navigate(next)
   }} />
 
   return step === 'shipping' ? (
-    <ShippingPage items={items} details={shipping} formVisible={shippingFormVisible} onRevealForm={() => setShippingFormVisible(true)} onChange={setShipping} onBack={goToCart} onContinue={() => {
+    <ShippingPage items={items} details={shipping} onChange={setShipping} onBack={goToCart} onContinue={() => {
       navigate(editingShipping ? 'review' : 'payment')
       setEditingShipping(false)
     }} />
   ) : (
     <CartPage items={items} onItemsChange={setItems} onCheckout={() => {
       if (items.length) {
-        setShippingFormVisible(false)
         setEditingShipping(false)
         window.location.hash = '/checkout/shipping'
       }

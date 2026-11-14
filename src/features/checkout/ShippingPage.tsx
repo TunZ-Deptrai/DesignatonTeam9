@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import { Button } from '../../components/ui/Button'
 import { AssetIcon } from '../../components/ui/AssetIcon'
 import { FormField } from '../../components/ui/FormField'
@@ -19,61 +19,31 @@ import './styles/shipping.css'
 type ShippingPageProps = {
   items: CartProduct[]
   details: ShippingDetails
-  formVisible: boolean
-  onRevealForm: () => void
   onChange: (details: ShippingDetails) => void
   onBack: () => void
   onContinue: () => void
 }
 
-export function ShippingPage({ items, details, formVisible, onRevealForm, onChange, onBack, onContinue }: ShippingPageProps) {
+export function ShippingPage({ items, details, onChange, onBack, onContinue }: ShippingPageProps) {
   const { quantity, subtotal } = getCartTotals(items)
   const shippingFee = getShippingFee(details.delivery)
   const [notice, setNotice] = useState('')
   const noticeRef = useRef<HTMLParagraphElement>(null)
-  const contactTitleRef = useRef<HTMLHeadingElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
-  const summaryRef = useRef<HTMLDivElement>(null)
-  const summaryBeforeReveal = useRef<DOMRect | null>(null)
-  useLayoutEffect(() => {
-    const previous = summaryBeforeReveal.current
-    const summary = summaryRef.current
-    summaryBeforeReveal.current = null
-    if (!formVisible || !previous || !summary || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const next = summary.getBoundingClientRect()
-    const animation = summary.animate([
-      { transform: `translate(${previous.left - next.left}px, ${previous.top - next.top}px)` },
-      { transform: 'translate(0, 0)' },
-    ], { duration: 480, easing: 'cubic-bezier(.22,.61,.36,1)' })
-    return () => animation.cancel()
-  }, [formVisible])
-  useEffect(() => {
-    if (formVisible) contactTitleRef.current?.focus({ preventScroll: true })
-  }, [formVisible])
-
-  function revealForm() {
-    summaryBeforeReveal.current = summaryRef.current?.getBoundingClientRect() ?? null
-    onRevealForm()
-  }
-
   function continueCheckout() {
-    if (!formVisible) {
-      revealForm()
-      return
-    }
     formRef.current?.requestSubmit()
   }
-  const province = addressOptions.find(option => option.province === details.province) ?? addressOptions[0]
-  const city = province.cities.find(option => option.name === details.city) ?? province.cities[0]
+  const province = addressOptions.find(option => option.province === details.province)
+  const city = province?.cities.find(option => option.name === details.city)
 
   function changeProvince(value: string) {
-    const next = addressOptions.find(option => option.province === value) ?? addressOptions[0]
-    onChange({ ...details, province: next.province, region: next.region, city: next.cities[0].name, barangay: next.cities[0].barangays[0], postalCode: '' })
+    const next = addressOptions.find(option => option.province === value)
+    onChange({ ...details, province: next?.province ?? '', region: next?.region ?? '', city: '', barangay: '', postalCode: '' })
   }
 
   function changeCity(value: string) {
-    const next = province.cities.find(option => option.name === value) ?? province.cities[0]
-    onChange({ ...details, city: next.name, barangay: next.barangays[0], postalCode: '' })
+    const next = province?.cities.find(option => option.name === value)
+    onChange({ ...details, city: next?.name ?? '', barangay: '', postalCode: '' })
   }
 
   function unavailable(label: string) {
@@ -95,10 +65,10 @@ export function ShippingPage({ items, details, formVisible, onRevealForm, onChan
       <CheckoutHeader quantity={quantity} onUnavailable={unavailable} onCart={onBack} />
       <main className="shipping-main" data-figma-node="503:11581">
         <CheckoutStepper onCart={onBack} />
-        <div className={`shipping-columns${formVisible ? '' : ' shipping-columns--summary-only'}`}>
-          {formVisible && <form ref={formRef} id="shipping-form" className="shipping-form" onSubmit={submit}>
+        <div className="shipping-columns">
+          <form ref={formRef} id="shipping-form" className="shipping-form" onSubmit={submit}>
             <section className="shipping-contact" aria-labelledby="shipping-contact-title">
-              <h1 ref={contactTitleRef} id="shipping-contact-title" tabIndex={-1}>Contact</h1>
+              <h1 id="shipping-contact-title" tabIndex={-1}>Contact</h1>
               <div className="shipping-field-row">
                 {field('fullName', 'Full Name', { autoComplete: 'name' })}
                 {field('mobile', 'Mobile number', { autoComplete: 'tel', type: 'tel' })}
@@ -119,12 +89,12 @@ export function ShippingPage({ items, details, formVisible, onRevealForm, onChan
             <section className="shipping-address" aria-labelledby="shipping-address-title">
               <h2 id="shipping-address-title">Shipping address</h2>
               <div className="shipping-field-row">
-                <SelectField id="shipping-province" name="province" label="Province" autoComplete="address-level1" value={province.province} options={addressOptions.map(option => option.province)} onChange={event => changeProvince(event.target.value)} required />
-                <SelectField id="shipping-city" name="city" label="City" autoComplete="address-level2" value={city.name} options={province.cities.map(option => option.name)} onChange={event => changeCity(event.target.value)} required />
+                <SelectField id="shipping-province" name="province" label="Province" autoComplete="address-level1" value={details.province} options={['', ...addressOptions.map(option => option.province)]} onChange={event => changeProvince(event.target.value)} required />
+                <SelectField id="shipping-city" name="city" label="City" autoComplete="address-level2" value={details.city} options={['', ...(province?.cities.map(option => option.name) ?? [])]} disabled={!province} onChange={event => changeCity(event.target.value)} required />
               </div>
               <div className="shipping-field-row">
-                <SelectField id="shipping-region" name="region" label="Region" value={province.region} options={[...new Set(addressOptions.map(option => option.region))]} onChange={event => changeProvince(addressOptions.find(option => option.region === event.target.value)!.province)} required />
-                <SelectField id="shipping-barangay" name="barangay" label="Barangay" autoComplete="address-level3" value={details.barangay} options={city.barangays} onChange={event => onChange({ ...details, barangay: event.target.value })} required />
+                <SelectField id="shipping-region" name="region" label="Region" value={details.region} options={['', ...new Set(addressOptions.map(option => option.region))]} onChange={event => changeProvince(addressOptions.find(option => option.region === event.target.value)?.province ?? '')} required />
+                <SelectField id="shipping-barangay" name="barangay" label="Barangay" autoComplete="address-level3" value={details.barangay} options={['', ...(city?.barangays ?? [])]} disabled={!city} onChange={event => onChange({ ...details, barangay: event.target.value })} required />
               </div>
               {field('postalCode', 'Postal code', { autoComplete: 'postal-code' })}
               {field('street', 'Street, building, unit', { autoComplete: 'street-address' })}
@@ -136,7 +106,7 @@ export function ShippingPage({ items, details, formVisible, onRevealForm, onChan
                 { id: 'standard', label: 'Standard · from Vietnam', helper: 'Arrives 19–22 Nov · duties included', fee: 'Free' },
                 { id: 'express', label: 'Express', helper: 'Arrives 16–18 Nov', fee: formatPrice(getShippingFee('express')) },
               ] as const).map(option => (
-                <label key={option.id} className={`shipping-delivery-option ${details.delivery === option.id ? 'is-selected' : ''}`}>
+                <label hidden={option.id === 'standard'} key={option.id} className={`shipping-delivery-option ${details.delivery === option.id ? 'is-selected' : ''}`}>
                   <input type="radio" name="delivery" value={option.id} checked={details.delivery === option.id} onChange={() => onChange({ ...details, delivery: option.id })} />
                   <span className="shipping-radio-mark" aria-hidden="true">{details.delivery === option.id && <img src={radioDot} width="12" height="12" alt="" />}</span>
                   <span className="shipping-delivery-copy"><span>{option.label}</span><small>{option.helper}</small></span>
@@ -144,8 +114,8 @@ export function ShippingPage({ items, details, formVisible, onRevealForm, onChan
                 </label>
               ))}
             </fieldset>
-          </form>}
-          <div ref={summaryRef} className="shipping-side">
+          </form>
+          <div className="shipping-side">
             <aside className="cart-summary shipping-summary" aria-labelledby="shipping-summary-title" data-figma-node="503:11655">
               <h2 id="shipping-summary-title">Order summary</h2>
               {items.map(item => (
@@ -162,7 +132,7 @@ export function ShippingPage({ items, details, formVisible, onRevealForm, onChan
               </dl>
               <div className="cart-summary-divider" />
               <dl className="cart-summary-total"><div><dt>Total</dt><dd key={subtotal + shippingFee} className="cart-summary-amount" aria-live="polite">{formatPrice(subtotal + shippingFee)}</dd></div></dl>
-              <Button variant="primary" type="button" onClick={continueCheckout} aria-expanded={formVisible} aria-controls={formVisible ? 'shipping-form' : undefined} disabled={!items.length}>Continue</Button>
+              <Button variant="primary" type="button" onClick={continueCheckout} disabled={!items.length}>Continue</Button>
               <p className="cart-guarantee"><AssetIcon src={assets.check} /><span>Free size exchange within 7 days if it doesn’t fit.</span></p>
             </aside>
             <p ref={noticeRef} className="shipping-notice" role="status" tabIndex={-1}>{notice}</p>

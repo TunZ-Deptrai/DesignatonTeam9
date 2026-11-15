@@ -9,13 +9,18 @@ import { ReviewPage } from './ReviewPage'
 import { ConfirmationPage } from './ConfirmationPage'
 import type { OrderReceipt } from './data/order'
 import { MembershipPage } from '../account/MembershipPage'
+import { ShirtsPage } from '../shirts/ShirtsPage'
+import { selectedShirt, type FitProfile } from '../shirts/data'
+import { Homepage } from '../homepage/Homepage'
 
-type CheckoutStep = 'cart' | 'shipping' | 'payment' | 'review' | 'confirmation' | 'membership'
+type CheckoutStep = 'home' | 'cart' | 'shipping' | 'payment' | 'review' | 'confirmation' | 'membership' | 'shirts'
 
 function readStep(): CheckoutStep {
+  if (window.location.hash === '#/cart' || window.location.hash === '#/checkout/cart') return 'cart'
+  if (window.location.hash === '#/shirts') return 'shirts'
   if (window.location.hash === '#/account/membership') return 'membership'
   const route = window.location.hash.replace('#/checkout/', '')
-  return route === 'shipping' || route === 'payment' || route === 'review' || route === 'confirmation' ? route : 'cart'
+  return route === 'shipping' || route === 'payment' || route === 'review' || route === 'confirmation' ? route : 'home'
 }
 
 export function CheckoutFlow() {
@@ -25,6 +30,7 @@ export function CheckoutFlow() {
   const [payment, setPayment] = useState<PaymentDetails>(initialPayment)
   const [editingShipping, setEditingShipping] = useState(false)
   const [receipt, setReceipt] = useState<OrderReceipt | null>(null)
+  const [shirtFitProfile, setShirtFitProfile] = useState<FitProfile | null>(null)
   const orderSequence = useRef(20481)
 
   useEffect(() => {
@@ -38,10 +44,18 @@ export function CheckoutFlow() {
       window.location.replace('#/checkout/review')
       return
     }
-    const titles = { cart: 'Your cart', shipping: 'Shipping address', payment: 'Payment method', review: 'Review your order', confirmation: 'Order confirmed', membership: 'Membership' }
+    const titles = { home: 'Home', cart: 'Your cart', shipping: 'Shipping address', payment: 'Payment method', review: 'Review your order', confirmation: 'Order confirmed', membership: 'Membership', shirts: 'Red Linen Shirt' }
     document.title = `${titles[step]} — MỘC STUDIO`
     window.scrollTo(0, 0)
     document.querySelector<HTMLElement>('main h1')?.focus()
+    if (step === 'home') {
+      const id = window.location.hash === '#/home/fit' ? 'home-fit' : window.location.hash === '#/home/collection' ? 'home-collection' : null
+      if (id) {
+        const section = document.getElementById(id)
+        section?.scrollIntoView({ block: 'start' })
+        section?.querySelector<HTMLElement>('h2')?.focus({ preventScroll: true })
+      }
+    }
   }, [step, receipt])
 
   function goToCart() {
@@ -53,6 +67,26 @@ export function CheckoutFlow() {
   }
 
   if (step === 'membership') return <MembershipPage quantity={items.reduce((sum, item) => sum + item.quantity, 0)} onCart={goToCart} />
+
+  if (step === 'home') return <Homepage quantity={items.reduce((sum, item) => sum + item.quantity, 0)} profile={shirtFitProfile} onCart={goToCart} onChooseFit={(profile, buyNow) => {
+    setShirtFitProfile(profile)
+    const product = selectedShirt({ size: 'L', color: 0, quantity: 1 })
+    setItems(current => current.some(item => item.id === product.id)
+      ? current.map(item => item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item)
+      : [...current, product])
+    if (buyNow) { setEditingShipping(false); navigate('shipping') }
+  }} />
+
+  if (step === 'shirts') return <ShirtsPage quantity={items.reduce((sum, item) => sum + item.quantity, 0)} profile={shirtFitProfile} onProfileChange={setShirtFitProfile} onCart={goToCart} onAdd={(selection, buyNow) => {
+    const product = selectedShirt(selection)
+    setItems(current => current.some(item => item.id === product.id)
+      ? current.map(item => item.id === product.id ? { ...item, quantity: item.quantity + product.quantity } : item)
+      : [...current, product])
+    if (buyNow) {
+      setEditingShipping(false)
+      navigate('shipping')
+    }
+  }} />
 
   if (step === 'payment') return <PaymentPage items={items} shipping={shipping} payment={payment} onChange={setPayment} onNavigate={navigate} onContinue={() => navigate('review')} />
   if (step === 'confirmation' && receipt) return <ConfirmationPage receipt={receipt} onContinueShopping={goToCart} />

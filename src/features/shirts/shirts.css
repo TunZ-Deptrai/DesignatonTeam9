@@ -1,0 +1,189 @@
+.shirts-page { --shirts-muted: #756d5c; --shirts-olive: #51573e; min-height: 100vh; background: #fcf9f3; }
+.shirts-page .checkout-header { position: relative; }
+.shirts-page .checkout-menu [aria-current='page'] { color: #232d03; font-weight: 600; }
+.shirts-main { display: flex; flex-direction: column; gap: 64px; padding: 48px 80px 120px; }
+.shirts-product-section { display: flex; flex-direction: column; gap: 32px; }
+.shirts-breadcrumb { font-size: 12px; line-height: 16px; letter-spacing: -.28px; color: var(--checkout-text-light); }
+.shirts-breadcrumb strong { color: #232d03; font-weight: 600; }
+.shirts-product-grid { display: grid; grid-template-columns: minmax(0,738fr) minmax(0,478fr); gap: 64px; align-items: start; }
+.shirts-gallery { display: grid; grid-template-columns: minmax(0,1fr) 88px; gap: 20px; min-width: 0; }
+.shirts-main-photo { aspect-ratio: 630 / 780; position: relative; overflow: hidden; border-radius: 2px; }
+.shirts-main-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.shirts-thumbnails { display: flex; flex-direction: column; gap: 12px; }
+.shirts-thumbnail { width: 88px; height: 110px; overflow: hidden; position: relative; border-radius: 2px; }
+.shirts-thumbnail img { width: 88px; height: 110px; object-fit: cover; }
+.shirts-thumbnail:not(.is-selected)::after { content: ''; position: absolute; inset: 0; background: rgb(255 255 255 / .6); pointer-events: none; }
+.shirts-buy-box { display: flex; flex-direction: column; gap: 32px; min-width: 0; color: var(--checkout-text-base); }
+.shirts-title-rating { display: flex; flex-direction: column; gap: 8px; }
+.shirts-title-rating h1 { color: var(--checkout-heading-color); font-family: var(--checkout-font-heading); font-size: 32px; line-height: 40px; letter-spacing: -1.44px; font-weight: 400; }
+.shirts-title-rating h1:focus { outline: none; }
+.shirts-rating { display: flex; align-items: center; gap: 4px; font-size: 12px; line-height: 16px; letter-spacing: -.28px; }
+.shirts-price { font-size: 46px; line-height: 52px; letter-spacing: -2.08px; font-weight: 600; }
+.shirts-variants { display: flex; flex-direction: column; gap: 24px; }
+.shirts-color,.shirts-sizes { border: 0; padding: 0; margin: 0; min-width: 0; }
+.shirts-color legend { padding: 0; margin-bottom: 12px; }
+.shirts-swatches { position: relative; width: 144px; height: 24px; display: flex; gap: 16px; }
+.shirts-swatches > img { position: absolute; inset: 0; }
+.shirts-swatches > button { position: relative; flex: 0 0 24px; width: 24px; height: 24px; border: 0; padding: 0; background: transparent; border-radius: 100%; cursor: pointer; }
+.shirts-swatches > button::after { content: ''; position: absolute; inset: -8px; border-radius: 100%; }
+.shirts-swatches > button.is-selected:not(:first-of-type) { outline: 2px solid var(--checkout-accent); outline-offset: 3px; }
+.shirts-size-label { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.shirts-size-label .moc-button { font-size: 12px; line-height: 16px; letter-spacing: -.28px; font-weight: 500; position: relative; }
+.shirts-size-label .moc-button::after { content: ''; position: absolute; inset: -12px -4px; }
+.shirts-size-options { display: flex; gap: 8px; }
+.shirts-size-chip { position: relative; width: 24px; height: 24px; border: 1px solid var(--checkout-accent); border-radius: 1000px; background: rgb(104 145 2 / .15); color: #232d03; font-size: 10px; line-height: 12px; letter-spacing: -.12px; }
+.shirts-size-chip::after { content: ''; position: absolute; inset: -4px; border-radius: 1000px; }
+.shirts-size-chip[aria-pressed='true'] { box-shadow: inset 0 0 0 1px var(--checkout-accent); }
+.shirts-quantity { display: flex; flex-direction: column; gap: 12px; }
+.shirts-quantity > div { display: flex; align-items: center; justify-content: space-between; width: 104px; height: 24px; }
+.shirts-quantity .moc-button { position: relative; }
+.shirts-quantity .moc-button::after { content: ''; position: absolute; inset: -8px; }
+.shirts-quantity .moc-button:disabled { cursor: default; }
+.shirts-quantity output { font-size: 16px; line-height: 24px; }
+.shirts-fit-card { padding: 20px; border-radius: 4px; background: white; box-shadow: 0 0 1px rgb(0 0 0 / .04), 0 1px 2px rgb(0 0 0 / .12), 0 4px 4px rgb(0 0 0 / .08); }
+.shirts-fit-card h2 { font: 600 16px/24px var(--checkout-font-ui); letter-spacing: -.36px; }
+.shirts-try-fit { display: flex; align-items: center; gap: 16px; }
+.shirts-try-fit > div { min-width: 0; flex: 1; }
+.shirts-try-fit p { font-size: 12px; line-height: 16px; letter-spacing: -.28px; color: var(--checkout-text-light); margin-top: 4px; }
+.shirts-try-button { padding: 12px 16px; min-height: 40px; flex-shrink: 0; border-radius: 4px; background: #ffd16c; color: #543000; font-size: 12px; line-height: 16px; letter-spacing: -.28px; font-weight: 600; }
+.shirts-saved-fit { display: flex; flex-direction: column; gap: 16px; }
+.shirts-saved-heading { display: flex; align-items: center; justify-content: space-between; }
+.shirts-saved-heading .moc-button { position: relative; font-size: 12px; line-height: 16px; font-weight: 600; color: var(--checkout-heading-color); }
+.shirts-saved-heading .moc-button::after { content: ''; position: absolute; inset: -14px -8px; }
+.shirts-saved-body { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.shirts-saved-values { display: flex; flex-direction: column; gap: 12px; }
+.shirts-saved-values dl { display: flex; gap: 4px; font-size: 12px; line-height: 16px; letter-spacing: -.28px; }
+.shirts-saved-values dl > div { display: flex; flex-direction: column; gap: 4px; width: 60px; }
+.shirts-saved-values dt,.shirts-saved-skin > span:first-child { color: var(--checkout-text-light); }
+.shirts-saved-values dd { color: black; }
+.shirts-saved-skin { display: flex; align-items: center; gap: 4px; font-size: 12px; line-height: 16px; }
+.shirts-saved-skin > span:first-child { width: 60px; }
+.shirts-small-skin { width: 12px; height: 12px; }
+.shirts-small-skin > span { display: block; width: 40px; height: 40px; transform: scale(.3); transform-origin: top left; }
+.shirts-body-shape { position: relative; width: 108px; height: 162px; flex: 0 0 108px; overflow: hidden; }
+.shirts-body-shape img { position: absolute; height: 100%; width: 150.62%; max-width: none; left: -33.95%; top: 0; }
+.shirts-ctas { display: flex; flex-direction: column; gap: 16px; }
+.shirts-button-outline { min-height: 56px; padding: 16px; border: 1px solid var(--checkout-accent); border-radius: 2px; font-size: 16px; line-height: 24px; letter-spacing: -.4px; font-weight: 600; color: var(--checkout-accent); box-shadow: var(--checkout-shadow); }
+.shirts-ctas .moc-button--primary { border-radius: 2px; }
+.shirts-guarantees { padding: 0; margin: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; color: #121212; }
+.shirts-guarantees li { display: flex; align-items: start; gap: 12px; }
+.shirts-guarantees li > div { display: flex; flex-direction: column; gap: 2px; }
+.shirts-guarantees small { font-size: 12px; line-height: 16px; letter-spacing: -.28px; color: var(--checkout-text-light); }
+.shirts-info { display: flex; flex-direction: column; gap: 40px; }
+.shirts-info-tabs { display: flex; align-items: start; gap: 16px; }
+.shirts-info-tabs .moc-button { border-radius: 0; padding: 2px 8px; font: 400 24px/32px var(--checkout-font-heading); letter-spacing: -.84px; color: var(--checkout-text-light); }
+.shirts-info-tabs .is-selected { border-bottom: 1px solid var(--checkout-accent); color: var(--checkout-heading-color); }
+.shirts-description { width: min(592px, 100%); display: flex; flex-direction: column; gap: 48px; font-size: 16px; line-height: 22px; letter-spacing: 0; color: var(--shirts-muted); }
+.shirts-description > div:first-child { display: flex; flex-direction: column; gap: 20px; }
+.shirts-description h2 { color: var(--shirts-olive); font: 600 36px/44px var(--checkout-font-ui); letter-spacing: -1.6px; }
+.shirts-care { display: flex; flex-direction: column; gap: 32px; }
+.shirts-care ul { display: flex; flex-direction: column; gap: 8px; padding: 0; margin: 8px 0 0; list-style: none; line-height: 26px; }
+.shirts-care li::before { content: '•  '; white-space: pre; }
+.shirts-fit-dialog { box-sizing: border-box; margin: auto; padding: 0; border: 1px solid rgb(2 2 2 / .07); border-radius: 24px; background: white; color: var(--checkout-text-base); box-shadow: 0 16px 48px rgb(0 0 0 / .16); overflow: hidden; max-width: calc(100vw - 32px); max-height: calc(100dvh - 32px); }
+.shirts-fit-dialog::backdrop { background: rgb(18 18 18 / .35); }
+.shirts-fit-dialog.is-measurements { width: 680px; height: 620px; }
+.fit-dialog-top { height: 32px; position: absolute; top: 32px; left: 48px; right: 48px; display: flex; justify-content: flex-end; z-index: 1; }
+.fit-close { width: 32px; height: 32px; position: relative; color: #121212; font-size: 24px; line-height: 24px; }
+.fit-close::after { content: ''; position: absolute; inset: -6px; }
+.fit-dialog-heading { position: absolute; top: 68px; left: 48px; right: 48px; display: flex; flex-direction: column; gap: 4px; }
+.shirts-fit-dialog h2 { font: 400 32px/40px var(--checkout-font-heading); color: var(--checkout-heading-color); letter-spacing: -1.3px; }
+.fit-dialog-heading p { line-height: 24px; letter-spacing: 0; }
+.fit-measurements-scroll { position: absolute; inset: 160px 48px 48px; display: flex; flex-direction: column; gap: 48px; overflow-y: auto; overflow-x: hidden; scrollbar-width: thin; padding-right: 12px; }
+.fit-input-section { display: flex; flex-direction: column; gap: 16px; flex-shrink: 0; }
+.fit-input-section h3,.fit-skin-section legend { font: 500 14px/20px var(--checkout-font-ui); color: #121212; margin: 0; letter-spacing: -.32px; }
+.fit-height-weight { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 32px; }
+.fit-range-control { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.fit-measurement { display: flex; flex-direction: column; gap: 8px; min-width: 0; font-size: 12px; line-height: 16px; letter-spacing: -.28px; color: #121212; }
+.fit-number-field { display: flex; align-items: center; gap: 4px; height: 44px; padding: 12px 18px; background: rgb(5 5 5 / .03); border-radius: 16px; box-shadow: inset 0 0 1px rgb(0 0 0 / .08),inset 0 0 3px rgb(0 0 0 / .12); font-size: 14px; line-height: 20px; font-weight: 500; }
+.fit-number-field:focus-within { outline: 2px solid var(--checkout-accent); outline-offset: 2px; }
+.fit-number-field input { width: 3ch; min-width: 0; appearance: textfield; field-sizing: content; border: 0; padding: 0; background: transparent; color: inherit; font: inherit; outline: none; }
+.fit-number-field input:focus-visible { outline: none; }
+.fit-number-field input::-webkit-inner-spin-button,.fit-number-field input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.fit-range { appearance: none; width: 100%; height: 20px; margin: 0; background: transparent; cursor: pointer; }
+.fit-range::-webkit-slider-runnable-track { height: 4px; background: linear-gradient(to right,#121212 var(--fit-progress),#eaeaea var(--fit-progress)); }
+.fit-range::-webkit-slider-thumb { appearance: none; width: 20px; height: 20px; margin-top: -8px; border: 2px solid #121212; border-radius: 50%; background: white; }
+.fit-range::-moz-range-track { height: 4px; background: #eaeaea; }
+.fit-range::-moz-range-progress { height: 4px; background: #121212; }
+.fit-range::-moz-range-thumb { width: 16px; height: 16px; border: 2px solid #121212; border-radius: 50%; background: white; }
+.fit-range-labels { display: flex; justify-content: space-between; font-size: 12px; line-height: 16px; color: var(--checkout-text-light); }
+.fit-body-fields { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 32px; }
+.fit-muted { font-size: 14px; line-height: 24px; color: var(--checkout-text-light); }
+.fit-input-help { font-size: 12px; line-height: 16px; color: var(--checkout-text-light); letter-spacing: -.28px; }
+.fit-skin-section { margin: 0; padding: 0; border: 0; min-width: 0; gap: 12px; }
+.fit-skin-section legend { padding: 0; margin-bottom: 12px; }
+.fit-skin-options { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 16px; padding-block: 8px; }
+.fit-skin-options label { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-width: 0; height: 80px; border-radius: 12px; font-size: 12px; line-height: 16px; color: #121212; cursor: pointer; }
+.fit-skin-options .is-selected { background: rgb(104 145 2 / .15); color: var(--shirts-olive); font-weight: 500; }
+.fit-skin-options label:has(input:focus-visible) { outline: 2px solid var(--checkout-accent); }
+.fit-skin-options input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.fit-form-actions { display: flex; flex-direction: column; gap: 12px; padding-bottom: 2px; }
+.fit-form-actions .moc-button { border-radius: 2px; }
+.fit-form-actions p { text-align: center; }
+.shirts-fit-dialog.is-result { width: 912px; height: 672px; padding: 88px 32px 48px; }
+.is-result .fit-dialog-top { left: 32px; right: 32px; }
+.fit-result-grid { display: grid; grid-template-columns: minmax(0,428fr) minmax(0,386fr); gap: 32px; height: 100%; }
+.fit-result-copy { display: flex; flex-direction: column; justify-content: space-between; min-width: 0; gap: 24px; }
+.fit-result-description { display: flex; flex-direction: column; gap: 24px; }
+.fit-result-description > div:first-child { display: flex; flex-direction: column; gap: 4px; }
+.fit-result-description > div:first-child > p { line-height: 24px; letter-spacing: 0; }
+.fit-result-description > p { width: min(375px, 100%); line-height: 24px; letter-spacing: 0; }
+.fit-recommendation { padding: 16px; background: #f6f4ec; border-radius: 12px; display: flex; flex-direction: column; gap: 4px; }
+.fit-recommendation h3 { margin: 0; font: 600 16px/24px var(--checkout-font-ui); color: var(--checkout-heading-color); }
+.fit-recommendation p { font-size: 13px; line-height: 20px; opacity: .7; letter-spacing: 0; }
+.fit-result-actions { display: flex; flex-direction: column; gap: 12px; }
+.fit-result-preview { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.fit-result-preview > p { line-height: 24px; letter-spacing: 0; }
+.fit-result-image { position: relative; flex: 1; min-height: 0; overflow: hidden; border-radius: 4px; }
+.fit-result-image img { position: absolute; width: 100%; height: 116.27%; left: 0; top: -.04%; max-width: none; }
+@media (max-width: 1199px) {
+  .shirts-main { padding-inline: 40px; }
+  .shirts-product-grid { gap: 32px; grid-template-columns: minmax(0,1.25fr) minmax(0,1fr); }
+  .shirts-gallery { grid-template-columns: minmax(0,1fr) 64px; gap: 12px; }
+  .shirts-thumbnail,.shirts-thumbnail img { width: 64px; height: 80px; }
+  .shirts-try-fit { flex-wrap: wrap; }
+}
+@media (max-width: 899px) {
+  .shirts-main { padding: 32px 24px 64px; gap: 48px; }
+  .shirts-product-grid { grid-template-columns: minmax(0,1fr); gap: 32px; }
+  .shirts-gallery { grid-template-columns: minmax(0,1fr); gap: 12px; }
+  .shirts-thumbnails { flex-direction: row; gap: 12px; }
+  .shirts-thumbnail,.shirts-thumbnail img { width: 72px; height: 90px; }
+  .shirts-try-fit { flex-wrap: nowrap; }
+  .shirts-fit-dialog.is-result { height: auto; overflow-y: auto; padding-bottom: 32px; }
+  .fit-result-grid { height: auto; }
+  .fit-result-image { flex: none; aspect-ratio: 386 / 498; }
+}
+@media (max-width: 599px) {
+  .shirts-main { padding: 24px 16px 48px; }
+  .shirts-buy-box { gap: 24px; }
+  .shirts-title-rating h1 { font-size: 30px; }
+  .shirts-fit-card { padding: 16px; }
+  .shirts-try-fit { align-items: flex-start; gap: 8px; }
+  .shirts-try-fit h2 { font-size: 14px; }
+  .shirts-try-button { min-height: 44px; padding-inline: 12px; }
+  .shirts-size-options { gap: 8px; }
+  .shirts-size-chip { width: 44px; height: 44px; font-size: 12px; }
+  .shirts-quantity > div { width: 144px; height: 44px; }
+  .shirts-quantity .moc-button { width: 44px; height: 44px; }
+  .shirts-quantity .moc-button::after { inset: 0; }
+  .shirts-description h2 { font-size: 28px; line-height: 36px; letter-spacing: -1px; }
+  .shirts-saved-body { gap: 8px; }
+  .shirts-body-shape { flex-basis: 90px; width: 90px; height: 135px; }
+  .shirts-fit-dialog { max-width: calc(100vw - 24px); max-height: calc(100dvh - 24px); border-radius: 20px; }
+  .shirts-fit-dialog.is-measurements { height: 620px; }
+  .fit-dialog-top { left: 20px; right: 20px; top: 20px; }
+  .fit-dialog-heading { left: 20px; right: 20px; top: 60px; }
+  .shirts-fit-dialog h2 { font-size: 26px; line-height: 34px; letter-spacing: -.8px; }
+  .fit-dialog-heading p { line-height: 20px; }
+  .fit-measurements-scroll { inset: 164px 20px 24px; gap: 32px; }
+  .fit-height-weight { gap: 16px; }
+  .fit-body-fields { gap: 12px; }
+  .fit-number-field { padding-inline: 12px; font-size: 16px; }
+  .fit-skin-options { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
+  .shirts-fit-dialog.is-result { padding: 76px 20px 24px; }
+  .is-result .fit-dialog-top { left: 20px; right: 20px; top: 20px; }
+  .fit-result-grid { grid-template-columns: minmax(0,1fr); gap: 24px; }
+  .fit-result-copy { gap: 24px; }
+  .fit-result-image { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .shirts-page main,.shirts-page .moc-button { animation: none; transition: none; } }

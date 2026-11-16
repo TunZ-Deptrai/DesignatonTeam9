@@ -7,6 +7,7 @@ import texture from '../../assets/homepage/story-texture.png'
 import manila from '../../assets/homepage/story-manila.png'
 import leaves from '../../assets/homepage/story-leaves.png'
 import storyBackground from '../../assets/homepage/story-background.png'
+import storyVideo from '../../assets/homepage/story-linen.mp4'
 import model from '../../assets/homepage/fit-model.png'
 import divider from '../../assets/homepage/pattern-banner.png'
 import featuredEdge from '../../assets/homepage/featured-edge.png'
@@ -22,7 +23,7 @@ import arrowFit from '../../assets/homepage/arrow-fit.svg'
 import rangeHandle from '../../assets/homepage/range-handle.svg'
 import fitStar from '../../assets/homepage/fit-star.svg'
 
-export const homeAssets = { hero, textile, logoMask, vietnam, linen, texture, manila, leaves, storyBackground, model, divider, arrowLight, arrowDark, arrowFit, rangeHandle, fitStar }
+export const homeAssets = { hero, textile, logoMask, vietnam, linen, texture, manila, leaves, storyBackground, storyVideo, model, divider, arrowLight, arrowDark, arrowFit, rangeHandle, fitStar }
 export const featuredPhotos = [
   { node: '847:5578', image: featuredEdge, className: 'edge', alt: 'Linen collection styling' },
   { node: '847:5589', image: featuredLeftSmall, className: 'left-small', alt: 'Light linen outfit' },

@@ -7,6 +7,7 @@ import { skinTones } from '../shirts/assets'
 import { sampleMeasurements, type FitProfile } from '../shirts/data'
 import { featuredPhotos, homeAssets } from './assets'
 import { useHomepageMotion } from './useHomepageMotion'
+import { StoryBackground } from './StoryBackground'
 import '../checkout/styles/cart.css'
 import '../checkout/styles/shipping.css'
 import '../shirts/shirts.css'
@@ -138,7 +139,7 @@ export function Homepage({ quantity, profile, onCart, onChooseFit }: Props) {
       </section>
 
       <section className="home-story" aria-labelledby="home-story-title" data-figma-node="847:5446">
-        <div className="home-story-background" aria-hidden="true"><img src={homeAssets.storyBackground} alt="" loading="lazy" /></div>
+        <StoryBackground paused={paused} />
         <h2 id="home-story-title">Our Story</h2>
         <div className="home-story-vietnam-title"><span className="home-pattern-marker" aria-hidden="true" /><h3>It Started in<br />Vietnam</h3></div>
         <img className="home-story-vietnam-photo" src={homeAssets.vietnam} alt="Working with natural linen in Vietnam" loading="lazy" />
